@@ -1,6 +1,7 @@
 package hotelSystem.reservation.controller;
 
 import hotelSystem.reservation.Service.CustomerService;
+import hotelSystem.reservation.controller.form.CustomerForm;
 import hotelSystem.reservation.domain.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

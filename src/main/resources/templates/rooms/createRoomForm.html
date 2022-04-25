@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form role="form" action="/rooms/new" method="post">
+        <div class="form-group">
+            <label for="name">방 이름</label>
+            <input type="text" id="name" name="name" placeholder="방 이름을 입력해주세요.">
+            <br>
+            <label for="price">방 가격</label>
+            <input type="text" id="price" name="price" placeholder="방 가격을 입력해주세요.">
+            <br>
+            <label for="capacity">최대 수용 인원</label>
+            <input type="text" id="capacity" name="capacity" placeholder="최대 수용 인원을 입력해주세요.">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

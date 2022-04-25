@@ -1,4 +1,4 @@
-package hotelSystem.reservation.controller;
+package hotelSystem.reservation.controller.form;
 
 import lombok.Getter;
 import lombok.Setter;
