@@ -1,13 +1,15 @@
-package hotelSystem.reservation;
+package hotelSystem.reservation.Service;
 
 import hotelSystem.reservation.domain.Customer;
 import hotelSystem.reservation.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
@@ -17,6 +19,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
+    @Transactional
     public Long join(Customer customer){
         validateDuplicateCustomer(customer);
         customerRepository.save(customer);

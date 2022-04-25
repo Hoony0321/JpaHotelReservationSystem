@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div class="jumbotron">
+        <h1>RESERVATION</h1>
+        <p class="lead">고객 기능</p>
+        <p>
+            <a class="btn btn-lg btn-secondary" href="/customers/new">고객 가입</a>
+            <a class="btn btn-lg btn-secondary" href="/customers">고객 목록</a>
+        </p>
+        <p class="lead">예약 기능</p>
+        <p>
+            <a class="btn btn-lg btn-dark" href="/items/new">예약 등록</a>
+            <a class="btn btn-lg btn-dark" href="/items">예약 확인</a>
+        </p>
+        <p class="lead">관리자 기능</p>
+        <p>
+            <a class="btn btn-lg btn-info" href="/order">예약 목록</a>
+            <a class="btn btn-lg btn-info" href="/orders">기타 미정</a>
+        </p>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container --></body>
+</html>
