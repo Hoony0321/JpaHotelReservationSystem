@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form role="form" action="/reservations/new" method="post">
+        <div class="form-group">
+            <label for="customer">고객 선택</label>
+            <select name="customer_id" id="customer" class="form-control">
+                <option value="">고객 선택</option>
+                <option th:each="customer : ${customers}"
+                        th:value="${customer.id}"
+                        th:text="${customer.name} + ' - phoneNumber : ' + ${customer.phoneNumber}" />
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="room">방 선택</label>
+            <select name="room_id" id="room" class="form-control">
+                <option value="">방 선택</option>
+                <option th:each="room : ${rooms}"
+                        th:value="${room.id}"
+                        th:text="${room.name}" />
+            </select>
+        </div>
+
+        <div class="form-group">
+            <div class="container mt-5">
+                <!--Grid row-->
+                <div class="row">
+                    <!--Grid column-->
+                    <div class="col-md-6 mb-4">
+                        <div class="md-form">
+                            <!--The "from" Date Picker -->
+                            <input placeholder="Selected starting date" type="text" id="startingDate" name="checkInDate" class="form-control datepicker">
+                            <label for="startingDate">check in</label>
+                        </div>
+
+                    </div>
+                    <!--Grid column-->
+
+                    <!--Grid column-->
+                    <div class="col-md-6 mb-4">
+                        <div class="md-form">
+                            <!--The "to" Date Picker -->
+                            <input placeholder="Selected ending date" type="text" id="endingDate" name="checkOutDate" class="form-control datepicker">
+                            <label for="endingDate">check out</label>
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                </div>
+                <!--Grid row-->
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
+<script>
+    $('.datepicker').datepicker({
+        inline: true
+    });
+
+
+    // Get the elements
+    var from_input = $('#startingDate').pickadate(),
+        from_picker = from_input.pickadate('picker')
+    var to_input = $('#endingDate').pickadate(),
+        to_picker = to_input.pickadate('picker')
+
+    // Check if there’s a “from” or “to” date to start with and if so, set their appropriate properties.
+    if (from_picker.get('value')) {
+        to_picker.set('min', from_picker.get('select'))
+    }
+    if (to_picker.get('value')) {
+        from_picker.set('max', to_picker.get('select'))
+    }
+
+    // Apply event listeners in case of setting new “from” / “to” limits to have them update on the other end. If ‘clear’ button is pressed, reset the value.
+    from_picker.on('set', function (event) {
+        if (event.select) {
+            to_picker.set('min', from_picker.get('select'))
+        } else if ('clear' in event) {
+            to_picker.set('min', false)
+        }
+    })
+    to_picker.on('set', function (event) {
+        if (event.select) {
+            from_picker.set('max', to_picker.get('select'))
+        } else if ('clear' in event) {
+            from_picker.set('max', false)
+        }
+    })
+</script>
+</body>
+
+
+</html>

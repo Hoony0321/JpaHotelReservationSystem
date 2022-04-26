@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>고객명</th>
+                <th>예약룸</th>
+                <th>체크인 날짜</th>
+                <th>체크아웃 날짜</th>
+                <th>상태</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation : ${reservations}">
+                <td th:text="${reservation.id}"></td>
+                <td th:text="${reservation.customer.name}"></td>
+                <td th:text="${reservation.room.name}"></td>
+                <td th:text="${reservation.checkInDate}"></td>
+                <td th:text="${reservation.checkOutDate}"></td>
+                <td th:text="${reservation.reservationStatus}"></td>
+            </tr>
+            </tbody> </table>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

@@ -23,7 +23,7 @@ public class RoomRepository {
     }
 
     public List<Room> findAll(){
-        return em.createQuery("select r from Reservation r", Room.class)
+        return em.createQuery("select r from Room r", Room.class)
                      .getResultList();
     }
 
