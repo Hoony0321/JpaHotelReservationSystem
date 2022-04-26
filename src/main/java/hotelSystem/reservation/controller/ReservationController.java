@@ -6,11 +6,15 @@ import hotelSystem.reservation.Service.RoomService;
 import hotelSystem.reservation.controller.form.ReservationForm;
 import hotelSystem.reservation.domain.Customer;
 import hotelSystem.reservation.domain.Reservation;
+import hotelSystem.reservation.domain.ReservationSearch;
 import hotelSystem.reservation.domain.Room;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
@@ -18,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -61,6 +66,25 @@ public class ReservationController {
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
         reservationService.join(reservation);
         return "redirect:/";
+    }
+
+    @GetMapping("/reservations/management")
+    public String manageReservation(@ModelAttribute("reservationSearch") ReservationSearch reservationSearch, Model model){
+        List<Reservation> reservations = reservationService.searchByCondition(reservationSearch);
+        model.addAttribute("reservations", reservations);
+        return "reservations/manage";
+    }
+
+    @PostMapping("/reservations/{reservationId}/approval")
+    public String approvalReservation(@PathVariable("reservationId") Long reservationId){
+        reservationService.approval(reservationId);
+        return "redirect:/reservations/management";
+    }
+
+    @PostMapping("/reservations/{reservationId}/denial")
+    public String denialReservation(@PathVariable("reservationId") Long reservationId){
+        reservationService.denial(reservationId);
+        return "redirect:/reservations/management";
     }
 
 }

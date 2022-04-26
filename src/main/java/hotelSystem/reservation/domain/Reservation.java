@@ -51,4 +51,13 @@ public class Reservation {
         this.room = room;
     }
 
+    //=== 비즈니스 로직 ===//
+    public void approval(){
+        this.reservationStatus =  ReservationStatus.APPROVAL;
+    }
+
+    public void denial(){
+        this.reservationStatus = ReservationStatus.DENIAL;
+    }
+
 }

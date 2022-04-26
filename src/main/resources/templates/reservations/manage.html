@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div>
+    <form th:object="${reservationSearch}" class="form-inline">
+        <div class="form-group mb-2">
+            <input type="text" th:field="*{customerName}" class="form-control"
+                   placeholder="예약자명"/>
+        </div>
+
+        <div class="form-group mb-2">
+            <input type="text" th:field="*{roomName}" class="form-control"
+                   placeholder="방 이름"/>
+        </div>
+        <div class="form-group mx-sm-1 mb-2">
+            <select th:field="*{reservationStatus}" class="form-control">
+                <option value="">Status</option>
+                <option th:each=
+                                "status : ${T(hotelSystem.reservation.domain.ReservationStatus).values()}"
+                        th:value="${status}"
+                        th:text="${status}">option
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">검색</button>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>예약자명</th>
+            <th>방 이름</th>
+            <th>체크인 날짜</th>
+            <th>체크아웃 날짜</th>
+            <th>상태</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reservation : ${reservations}">
+            <td th:text="${reservation.id}"></td>
+            <td th:text="${reservation.customer.name}"></td>
+            <td th:text="${reservation.room.name}"></td>
+            <td th:text="${reservation.checkInDate}"></td>
+            <td th:text="${reservation.checkOutDate}"></td>
+            <td th:text="${reservation.reservationStatus}"></td>
+            <td>
+                <a th:if="${reservation.reservationStatus.name() == 'STANDBY'}" href="#"
+                   th:href="'javascript:approval('+${reservation.id}+')'"
+                   class="btn btn-danger">APPROVAL</a>
+            </td>
+
+            <td>
+                <a th:if="${reservation.reservationStatus.name() == 'STANDBY'}" href="#"
+                   th:href="'javascript:denial('+${reservation.id}+')'"
+                   class="btn btn-danger">DENIAL</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+<script>
+    function approval(id){
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/reservations/" + id + "/approval");
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    function denial(id){
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/reservations/" + id + "/denial");
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+</html>
