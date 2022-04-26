@@ -25,7 +25,7 @@ public class CustomerController {
 
     @PostMapping("/customers/new")
     public String create(CustomerForm form){
-        Customer newCustomer = Customer.createNewCustomer(form.getName(), form.getPhoneNumber());
+        Customer newCustomer = new Customer(form.getName(), form.getPhoneNumber());
         customerService.join(newCustomer);
         return "redirect:/";
     }

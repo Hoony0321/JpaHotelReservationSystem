@@ -21,8 +21,20 @@ public class ReservationService {
 
     @Transactional
     public Long join(Reservation reservation){
+        validateDate(reservation);
         reservationRepository.save(reservation);
         return reservation.getId();
+    }
+
+    private void validateDate(Reservation reservation) {
+        List<Reservation> reservations = reservationRepository.findAll();
+        for(Reservation item : reservations){
+            if(item.getRoom().getId() == reservation.getRoom().getId()){
+                if(reservation.getCheckInDate().isBefore(item.getCheckOutDate()) && reservation.getCheckOutDate().isAfter(item.getCheckInDate())){
+                    throw new IllegalStateException("이미 해당 기간에 예약이 잡혀있습니다.");
+                }
+            }
+        }
     }
 
     public Reservation findReservation(Long id){

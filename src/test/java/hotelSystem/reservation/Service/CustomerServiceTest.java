@@ -20,7 +20,7 @@ class CustomerServiceTest {
     @Test
     public void 회원가입() throws Exception{
         //given
-        Customer customer = Customer.createNewCustomer("test","010-1111-1111");
+        Customer customer = new Customer("test","010-1111-1111");
 
         //when
         Long saveId = customerService.join(customer);
@@ -34,10 +34,10 @@ class CustomerServiceTest {
     @Test
     public void validateDuplicateCustomer() {
         //given
-        Customer customer = Customer.createNewCustomer("test","010-1111-1111");
+        Customer customer = new Customer("test","010-1111-1111");
         Long saveId = customerService.join(customer);
 
-        Customer customer1 = Customer.createNewCustomer("test","010-1111-1111");
+        Customer customer1 = new Customer("test","010-1111-1111");
 
         //when
         IllegalStateException error = assertThrows(IllegalStateException.class, () -> {

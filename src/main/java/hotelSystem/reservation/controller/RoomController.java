@@ -24,7 +24,7 @@ public class RoomController {
 
     @PostMapping("/rooms/new")
     public String create(RoomForm form){
-        Room newRoom = Room.createNewRoom(form.getName(), form.getPrice(), form.getCapacity());
+        Room newRoom = new Room(form.getName(), form.getPrice(), form.getCapacity());
         roomService.join(newRoom);
         return "redirect:/";
     }

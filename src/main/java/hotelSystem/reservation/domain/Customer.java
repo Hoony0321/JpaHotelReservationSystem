@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter(value = AccessLevel.PROTECTED)
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Customer {
 
@@ -24,11 +24,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Reservation> reservations = new ArrayList<>();
 
-    public static Customer createNewCustomer(String name, String phoneNumber){
-        Customer customer = new Customer();
-        customer.setName(name);
-        customer.setPhoneNumber(phoneNumber);
-
-        return customer;
+    public Customer(String name, String phoneNumber){
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 }
